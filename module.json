@@ -1,3 +1,4 @@
 {
-    "servers":["https://raw.githubusercontent.com/soler91/HH-Firewall-Markers/master/"]
+	"disableAutoUpdate": false,
+	"servers": ["https://raw.githubusercontent.com/valkyr1e-tera/HH-Firewall-Markers/master/"]
 }
