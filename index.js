@@ -13,46 +13,28 @@ module.exports = function HHMarkers(mod) {
     { x: -8908, y: -84001, z: 1 }  // Right-Middle
   ]
   let markers = []
-  let inHarrowhold = false
   let uid = 999999999
 
-  mod.hook('S_LOAD_TOPO', 3, (event) => {
-    ClearSpawns()
-    if (event.zone == 9950) {
-      inHarrowhold = true
-    } else {
-      inHarrowhold = false
-    }
+  mod.hook('S_LOAD_TOPO', 3, () => {
+    for (const marker of markers)
+      mod.send('S_DESPAWN_BUILD_OBJECT', 2, { gameId: marker })
+    markers = []
   })
   
   mod.hook('C_LOAD_TOPO_FIN', 1, () => {
-    if (inHarrowhold)
-      SpawnMarkers()
+    if (mod.game.me.zone === 9950) {
+      for (const coord of COORDS) {
+        mod.send('S_SPAWN_BUILD_OBJECT', 2, {
+          gameId: uid,
+          itemId: 1,
+          loc: new Vec3(coord),
+          w: Math.random() * Math.PI * 2,
+          ownerName: mod.game.me.name,
+          message: ''
+        })
+        markers.push(uid)
+        uid--
+      }
+    }
   })
-  
-  function SpawnMarkers(){
-    COORDS.forEach(coord => {
-      mod.send('S_SPAWN_BUILD_OBJECT', 2, {
-        gameId: uid,
-        itemId: 1,
-        loc: new Vec3(coord),
-        w: Math.random() * Math.PI * 2,
-        unk: 0,
-        ownerName: mod.game.me.name,
-        message: ''
-      })
-      markers.push(uid)
-      uid--
-    })
-  }
-  
-  function ClearSpawns(){
-    markers.forEach(marker => {
-      mod.send('S_DESPAWN_BUILD_OBJECT', 2, {
-        gameId: marker,
-        unk: 0
-      })
-    })
-    markers = []
-  }
 }

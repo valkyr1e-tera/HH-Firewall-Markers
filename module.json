@@ -1,4 +1,8 @@
 {
 	"disableAutoUpdate": false,
-	"servers": ["https://raw.githubusercontent.com/valkyr1e-tera/HH-Firewall-Markers/master/"]
+	"name": "hh-firewall-markers",
+	"author": "valkyr1e / soler91",
+	"description": "Marking safespot in HH P4",
+	"version": "2.0",
+	"servers": ["https://raw.githubusercontent.com/valkyr1e-tera/hh-firewall-markers/master/"]
 }
